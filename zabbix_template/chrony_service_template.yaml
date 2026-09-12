@@ -1,0 +1,164 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: a571c0d144b14fd4a87a9d9b2aa9fcd6
+      name: Templates/Applications
+  templates:
+    - uuid: 60e52ac18e27475585b88238ce3e0119
+      template: 'Chrony Service'
+      name: 'Chrony Service'
+      groups:
+        - name: Templates/Applications
+      items:
+        - uuid: db2a5816c7ad4cc2ac324941d496645d
+          name: 'Sources Metrics - Active source offset'
+          key: chrony.active_offset
+          units: microseconds
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: a55e43fe652f4a1e82387fc1846c70dd
+          name: 'Tracking Metrics - Frequency'
+          key: chrony.freq
+          value_type: FLOAT
+          units: ppm
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 619b551489164388a60fbeabe6b5906d
+          name: 'Tracking Metrics - Leap status'
+          key: chrony.leap_status
+          description: 'Normal=0, Not sync=1'
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 44baf8787ceb4bb48f94ccd4bcbfa560
+          name: 'Tracking Metrics - Residual frequency'
+          key: chrony.res_freq
+          value_type: FLOAT
+          units: ppm
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 23626400af414ba3bc44d60336324618
+          name: 'Tracking Metrics - RMS offset'
+          key: chrony.rms_offset
+          value_type: FLOAT
+          units: seconds
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 04c8ffe1ce564f35b420b11df2d0595c
+          name: 'Tracking Metrics - Root delay'
+          key: chrony.root_delay
+          value_type: FLOAT
+          units: seconds
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: aea6a8ddc24a47d88bcb733ffdf9df3c
+          name: 'Tracking Metrics - Root dispersion'
+          key: chrony.root_dispersion
+          value_type: FLOAT
+          units: seconds
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 99deb6e523b045c1abc00e6a7e95e9e8
+          name: 'Tracking Metrics - Skew'
+          key: chrony.skew
+          value_type: FLOAT
+          units: ppm
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 4ef0ee0b4ebb422e92d2b734cc9aed26
+          name: 'Sources Metrics - Count of reachable sources'
+          key: chrony.sources_reach
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 1fd11b27f12e4c31a25137e9ded88f59
+          name: 'Sources Metrics - Number of total sources'
+          key: chrony.sources_total
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 614944fde800427e9c5135024deb4ebb
+          name: 'Tracking Metrics - Stratum level'
+          key: chrony.stratum
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: bc867d03358a4294a2454f7480a5ca4f
+          name: 'Tracking Metrics - Update interval'
+          key: chrony.update_interval
+          value_type: FLOAT
+          units: seconds
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 720bc0b5a1f64cddbdbf9af24ac77d75
+          name: 'Chrony Global Sources Status All'
+          key: chrony_global_sources_status_all
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 8bee6fbc363249af941d37b919ef2b6d
+          name: 'Chrony Global Sources Status Current'
+          key: chrony_global_sources_status_current
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 960c71f786ba462ba353f22816a89559
+          name: 'Chrony Global Status'
+          key: chrony_global_status
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP
+        - uuid: 7d6608838ed2447dba5f5a5f3de9cb32
+          name: 'Chrony Global Status Numeric'
+          key: chrony_global_status_numeric
+          trends: '0'
+          tags:
+            - tag: Application
+              value: Chrony
+            - tag: 'Application Service'
+              value: NTP

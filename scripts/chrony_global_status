@@ -1,0 +1,68 @@
+#!/bin/bash
+STATUS_OK=true
+MSG=""
+
+add_reason() {
+    MSG="${MSG}$1; "
+    STATUS_OK=false
+}
+if ! systemctl is-active --quiet chronyd; then
+    add_reason "chronyd service is not running"
+fi
+
+NUMERIC_MODE=false
+if [[ "$1" == "--numeric" ]]; then
+    NUMERIC_MODE=true
+fi
+
+TRACKING=$(chronyc -n tracking 2>/dev/null)
+if [ -z "$TRACKING" ]; then
+    add_reason "chronyc tracking command failed or no response"
+else
+    LEAP=$(echo "$TRACKING" | awk '/Leap status/ {print $4}')
+    STRATUM=$(echo "$TRACKING" | awk '/Stratum/ {print $3}')
+    #OFFSET=$(echo "$TRACKING" | awk '/Last offset/ {print $4}')
+    if [[ "$LEAP" != "Normal" ]]; then
+        add_reason "Leap status is $LEAP"
+    fi
+    if (( STRATUM > 5 )); then
+        add_reason "Stratum too high ($STRATUM)"
+    fi
+#    OFFSET_NUM=$(echo "$OFFSET" | sed 's/+//; s/-//;')
+#    if (( $(echo "$OFFSET_NUM > 0.05" | bc -l) )); then
+#        add_reason "Time offset too large ($OFFSET s)"
+#    fi
+fi
+
+SOURCES=$(chronyc -n sources 2>/dev/null)
+if [ -z "$SOURCES" ]; then
+    add_reason "No NTP sources available"
+else
+    ACTIVE_SRC=$(echo "$SOURCES" | awk '/^\^?\*/ {print $2}')
+    if [ -z "$ACTIVE_SRC" ]; then
+        add_reason "No active NTP source selected"
+    fi
+fi
+
+CLIENTS=$(chronyc -n clients 2>/dev/null | grep -E '^[0-9]' | wc -l)
+if (( CLIENTS == 0 )); then
+    add_reason "No NTP clients connected"
+fi
+
+if ! ss -lupn 2>/dev/null | grep -q ':323'; then
+    add_reason "Chronyd is not listening on UDP/323"
+fi
+
+if $STATUS_OK; then
+    if $NUMERIC_MODE; then
+        echo 1
+    else
+        echo "OK: Chrony server is healthy"
+    fi
+else
+    if $NUMERIC_MODE; then
+        echo 0
+    else
+        echo "NOT OK: ${MSG::-2}"
+    fi
+fi

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+get_status() {
+    case "$1" in
+        "*") echo "peered" ;;
+        "+") echo "combined" ;;
+        "-") echo "excluded" ;;
+        "?") echo "unreachable" ;;
+        "x") echo "falseticker" ;;
+        "~") echo "noisy" ;;
+        *) echo "unknown" ;;
+    esac
+}
+
+show_current() {
+    line=$(chronyc -n sources | awk '/^\^\*/')
+    if [[ -z "$line" ]]; then
+        echo "No active NTP source found"
+    else
+        src=$(echo "$line" | awk '{print $2}')
+        sym=$(echo "$line" |sed 's/\^//'|  awk '{print $1}')
+        status=$(get_status "$sym")
+        echo "${src} - ${status}"
+    fi
+}
+
+show_all() {
+    echo "Chrony sources status:"
+    chronyc -n sources | awk 'NR>2 {print $1, $2, $3}' | sed 's/\^//' |  while read sym src ip; do
+        case "$sym" in
+            "*") status="peered" ;;
+            "+") status="combined" ;;
+            "-") status="excluded" ;;
+            "?") status="unreachable" ;;
+            "x") status="falseticker" ;;
+            "~") status="noisy" ;;
+            *) status="unknown" ;;
+        esac
+        echo "${src} - ${status}"
+    done
+}
+
+case "$1" in
+    current)
+        show_current
+        ;;
+    all)
+        show_all
+        ;;
+esac
