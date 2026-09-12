@@ -2,7 +2,8 @@
 
 Chrony monitoring template for **Zabbix 6.0 LTS** using Zabbix Agent/Agent 2.
 
-![Zabbix Chrony Template](https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/refs/heads/dev/zabbix_chrony_template.png)
+![Zabbix Chrony Template](https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/refs/heads/main/zabbix_chrony_template.png)
+
 ## Quick Setup
 
 ### 1. Install the Zabbix agent configuration
@@ -10,21 +11,25 @@ Chrony monitoring template for **Zabbix 6.0 LTS** using Zabbix Agent/Agent 2.
 ```bash
 sudo mkdir -p /etc/zabbix/zabbix_agent2.d
 sudo curl -fsSL \
-  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/dev/agent/chrony.conf \
-  -o /etc/zabbix/zabbix_agent2.d/chrony.conf
+  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/refs/heads/main/zabbix_agent2.d/chrony_service.conf \
+  -o /etc/zabbix/zabbix_agent2.d/chrony_service.conf
 ```
 
 ### 2. Install the Chrony status scripts
 
 ```bash
 sudo curl -fsSL \
-  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/dev/agent/scripts/chrony_global_status \
+  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/refs/heads/main/scripts/chrony_global_status \
   -o /usr/local/bin/chrony_global_status
- sudo chmod 755 /usr/local/bin/chrony_global_status
+
+sudo chmod 755 /usr/local/bin/chrony_global_status
+```
   
+```bash
 sudo curl -fsSL \
-  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/dev/agent/scripts/chrony_global_sources_status \
+  https://raw.githubusercontent.com/arman-chahardoli/zabbix-chrony-template/refs/heads/main/scripts/chrony_global_sources_status \
   -o /usr/local/bin/chrony_global_sources_status
+
 sudo chmod 755 /usr/local/bin/chrony_global_sources_status
 ```
 
