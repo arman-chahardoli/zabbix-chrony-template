@@ -68,12 +68,4 @@ zabbix_template/chrony_service_template.yaml
 
 Then link **Chrony Service** to the required Linux host.
 
-### Requirements
-
-- Linux
-- Chrony
-- `chronyc`
-- Zabbix Agent or Agent 2
-- Zabbix 6.0 LTS
-
 The monitoring uses native `chronyc` commands and Zabbix `UserParameter` checks; no additional monitoring software is required.
